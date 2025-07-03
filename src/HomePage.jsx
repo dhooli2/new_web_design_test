@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { loadStripe } from '@stripe/stripe-js';
 
 // Environment variables
-const PLACEHOLDER_LOGO = '/assets/logo.png'; // logo saved under public/assets/logo.png
+const PLACEHOLDER_LOGO = '/assets/logo.png';
 const VITE_STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 const stripePromise = loadStripe(VITE_STRIPE_PUBLISHABLE_KEY);
@@ -25,68 +25,52 @@ const testimonials = [
 ];
 
 export default function HomePage() {
-  const handleCheckout = async (plan) => {
-    try {
-      const stripe = await stripePromise;
-      const res = await fetch(`${VITE_API_URL}/create-checkout-session`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan })
-      });
-      const { sessionId } = await res.json();
-      await stripe.redirectToCheckout({ sessionId });
-    } catch (err) {
-      console.error('Checkout error:', err);
-    }
+  const [selectedPlan, setSelectedPlan] = useState('');
+
+  const scrollToContact = (plan) => {
+    setSelectedPlan(plan);
+    const section = document.getElementById('contact');
+    if (section) section.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const PlanButton = ({ label, plan, className }) => (
+    <button
+      onClick={() => scrollToContact(plan)}
+      className={`${className} font-semibold rounded hover:opacity-90 transition-opacity`}
+    >
+      {label}
+    </button>
+  );
 
   return (
     <div className="font-sans text-gray-800 bg-white">
       {/* Navbar */}
-      <header className="container mx-auto flex items-center justify-between py-6 px-4 md:px-0">
+      <header className="container mx-auto flex flex-col md:flex-row items-center justify-between py-6 px-4 md:px-0">
         <div className="flex items-center space-x-3">
-          <img
-            src={PLACEHOLDER_LOGO}
-            alt="Company Logo"
-            className="h-10 w-auto"
-          />
+          <img src={PLACEHOLDER_LOGO} alt="Company Logo" className="h-10 w-auto" />
           <div>
             <span className="text-2xl font-bold text-blue-600">Personalized AI Solutions</span>
-            <p className="text-sm text-gray-500">for Small &amp; Micro Businesses</p>
+            <p className="text-sm text-gray-500">for Small & Micro Businesses</p>
           </div>
         </div>
-        <nav className="space-x-6 text-gray-600">
-          <a href="#features" className="hover:text-teal-500 transition">Features</a>
+        <nav className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6 text-gray-600 mt-4 md:mt-0">
+          <a href="#features" onClick={() => scrollToContact('')} className="hover:text-teal-500 transition">Features</a>
           <a href="#pricing" className="hover:text-teal-500 transition">Pricing</a>
           <a href="#contact" className="hover:text-teal-500 transition">Contact</a>
-          <button
-            onClick={() => handleCheckout('single-agent')}
-            className="px-4 py-2 bg-teal-400 text-white rounded hover:bg-teal-500 transition"
-          >
-            Get Started
-          </button>
+          <PlanButton label="Get Started" plan="single-agent" className="px-4 py-2 bg-teal-400 text-white" />
         </nav>
       </header>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-teal-50 via-blue-50 to-indigo-50 py-20">
         <div className="container mx-auto text-center px-4">
-          <motion.h1
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4"
-          >
+          <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
             AI-Powered Text-Back & Booking
           </motion.h1>
           <p className="text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
             Ensure <span className="font-semibold text-teal-500">you never miss a sale</span>—automate SMS confirmations and streamline bookings.
           </p>
-          <button
-            onClick={() => handleCheckout('single-agent')}
-            className="mt-4 px-8 py-3 bg-gradient-to-r from-teal-400 to-blue-400 text-white rounded-full hover:opacity-90 transition-opacity"
-          >
-            Start at $99/mo
-          </button>
+          <PlanButton label="Start at $99/mo" plan="single-agent" className="mt-4 px-8 py-3 bg-gradient-to-r from-teal-400 to-blue-400 text-white rounded-full" />
         </div>
       </section>
 
@@ -117,7 +101,6 @@ export default function HomePage() {
         <div className="container mx-auto text-center px-4 md:px-0">
           <h2 className="text-3xl font-bold text-teal-500 mb-4">Pricing Plans</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {/* Single Agent */}
             <div className="bg-white rounded-lg shadow p-8">
               <h3 className="text-2xl font-semibold mb-4 text-teal-500">Single Agent</h3>
               <p className="text-4xl font-bold mb-4 text-gray-900">$99/mo</p>
@@ -126,14 +109,8 @@ export default function HomePage() {
                 <li>Unlimited SMS Confirmations</li>
                 <li>Calendar Sync</li>
               </ul>
-              <button
-                onClick={() => handleCheckout('single-agent')}
-                className="w-full py-3 bg-teal-500 text-white rounded hover:opacity-90 transition-opacity"
-              >
-                Choose Plan
-              </button>
+              <PlanButton label="Choose Plan" plan="single-agent" className="w-full py-3 bg-teal-500 text-white" />
             </div>
-            {/* Multi-Agent */}
             <div className="bg-white rounded-lg shadow p-8">
               <h3 className="text-2xl font-semibold mb-4 text-blue-500">Multi-Agent</h3>
               <p className="text-4xl font-bold mb-4 text-gray-900">$199/mo</p>
@@ -142,24 +119,13 @@ export default function HomePage() {
                 <li>Team Collaboration</li>
                 <li>Priority Support</li>
               </ul>
-              <button
-                onClick={() => handleCheckout('multi-agent')}
-                className="w-full py-3 bg-blue-500 text-white rounded hover:opacity-90 transition-opacity"
-              >
-                Choose Plan
-              </button>
+              <PlanButton label="Choose Plan" plan="multi-agent" className="w-full py-3 bg-blue-500 text-white" />
             </div>
-            {/* Enterprise */}
             <div className="bg-white rounded-lg shadow p-8">
               <h3 className="text-2xl font-semibold mb-4 text-orange-500">Enterprise</h3>
               <p className="text-2xl font-bold mb-4 text-gray-900">Custom Pricing</p>
               <p className="text-gray-600 mb-6">Volume discounts &amp; custom integrations</p>
-              <button
-                onClick={() => window.location.href = '#contact'}
-                className="w-full py-3 bg-orange-500 text-white rounded hover:opacity-90 transition-opacity"
-              >
-                Contact Sales
-              </button>
+              <PlanButton label="Contact Sales" plan="enterprise" className="w-full py-3 bg-orange-500 text-white" />
             </div>
           </div>
         </div>
@@ -185,7 +151,8 @@ export default function HomePage() {
       <section id="contact" className="bg-gray-50 py-16">
         <div className="container mx-auto text-center px-4 md:px-0">
           <h2 className="text-3xl font-bold text-purple-500 mb-4">Ready to Get Started?</h2>
-          <form action="/api/leads" method="POST" className="max-w-md mx-auto grid grid-cols-1 gap-4">
+          <form action="/api/leads" method="POST" className="max-w-md mx-auto grid grid-cols-1 gap-4">```jsx
+            <input name="plan" type="hidden" value={selectedPlan} />
             <input name="name" placeholder="Name" className="w-full p-3 border border-gray-300 rounded-lg" required />
             <input name="business" placeholder="Business Name" className="w-full p-3 border border-gray-300 rounded-lg" required />
             <input name="industry" placeholder="Industry (e.g., Tire Shop)" className="w-full p-3 border border-gray-300 rounded-lg" required />
