@@ -47,7 +47,7 @@ export default function HomePage() {
       {/* Navbar */}
       <header className="sticky top-0 bg-white bg-opacity-95 backdrop-blur-sm shadow-md z-50">
         <div className="container mx-auto flex flex-col py-4 px-4">
-          {/* Mobile/Desktop Row 1 */}
+          {/* Row 1 */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <img src={PLACEHOLDER_LOGO} alt="Company Logo" className="h-16 md:h-20 w-auto" />
@@ -61,18 +61,18 @@ export default function HomePage() {
               <PlanButton label="Get Started" plan="single-agent" className="px-5 py-2 bg-teal-500 text-white" />
             </div>
           </div>
-          {/* Mobile Row 2: Features, Pricing, Contact, About Us */}
+          {/* Mobile Nav Row 2 */}
           <nav className="mt-4 flex justify-around md:hidden">
             <a href="#features" onClick={() => scrollToContact('')} className="hover:text-teal-500 transition">Features</a>
             <a href="#pricing" className="hover:text-teal-500 transition">Pricing</a>
             <a href="#contact" className="hover:text-teal-500 transition">Contact</a>
             <a href="/about" className="hover:text-teal-500 transition">About Us</a>
           </nav>
-          {/* Mobile Row 3: How It Works */}
-          <nav className="mt-2 flex justify-around md:hidden">
+          {/* Mobile Nav Row 3 */}
+          <nav className="mt-2 flex justify-center md:hidden">
             <a href="/how-it-works" className="hover:text-teal-500 transition">How It Works</a>
           </nav>
-          {/* Mobile Row 4: CTA */}
+          {/* Mobile CTA Row 4 */}
           <div className="mt-4 flex justify-center md:hidden">
             <PlanButton label="Get Started" plan="single-agent" className="px-5 py-2 bg-teal-500 text-white" />
           </div>
@@ -170,4 +170,28 @@ export default function HomePage() {
                 <span className="font-semibold text-gray-900">{t.name}</span>
               </div>
             </div>
-          ))}\
+          ))}
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="bg-gray-50 py-16">
+        <div className="container mx-auto text-center px-4 md:px-0">
+          <h2 className="text-3xl font-bold text-purple-500 mb-4">Ready to Get Started?</h2>
+          <form action="/api/leads" method="POST" className="max-w-md mx-auto grid grid-cols-1 gap-4">
+            <input name="plan" type="hidden" value={selectedPlan} />
+            <input name="name" placeholder="Name" className="w-full p-3 border border-gray-300 rounded-lg" required />
+            <input name="business" placeholder="Business Name" className="w-full p-3 border border-gray-300 rounded-lg" required />
+            <input name="industry" placeholder="Industry (e.g., Tire Shop)" className="w-full p-3 border border-gray-300 rounded-lg" required />
+            <input type="email" name="email" placeholder="Email" className="w-full p-3 border border-gray-300 rounded-lg" required />
+            <input name="phone" placeholder="Phone" className="w-full p-3 border border-gray-300 rounded-lg" required />
+            <button type="submit" className="py-3 bg-purple-500 text-white rounded hover:bg-purple-600 transition">Submit</button>
+          </form>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-6 bg-white text-center text-gray-500">© {new Date().getFullYear()} Personalized AI Solutions</footer>
+    </div>
+  );
+}
