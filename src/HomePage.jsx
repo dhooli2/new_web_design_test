@@ -45,20 +45,27 @@ export default function HomePage() {
   return (
     <div className="font-sans text-gray-800 bg-white">
       {/* Navbar */}
-      <header className="container mx-auto flex flex-col md:flex-row items-center justify-between py-6 px-4 md:px-0">
-        <div className="flex items-center space-x-3">
-          <img src={PLACEHOLDER_LOGO} alt="Company Logo" className="h-10 w-auto" />
-          <div>
-            <span className="text-2xl font-bold text-blue-600">Personalized AI Solutions</span>
-            <p className="text-sm text-gray-500">for Small & Micro Businesses</p>
+      <header className="sticky top-0 bg-white bg-opacity-95 backdrop-blur-sm shadow-md z-50">
+        <div className="container mx-auto flex items-center justify-between py-4 px-4">
+          {/* Logo & Title */}
+          <div className="flex items-center space-x-4">
+            <img src={PLACEHOLDER_LOGO} alt="Company Logo" className="h-12 w-auto" />
+            <div>
+              <span className="text-2xl font-bold text-blue-600">Personalized AI Solutions</span>
+              <p className="text-sm text-gray-500">for Small & Micro Businesses</p>
+            </div>
           </div>
+          {/* Nav Links */}
+          <nav className="flex space-x-6 text-gray-600">
+            <a href="#features" onClick={() => scrollToContact('')} className="hover:text-teal-500 transition">Features</a>
+            <a href="#pricing" className="hover:text-teal-500 transition">Pricing</a>
+            <a href="#contact" className="hover:text-teal-500 transition">Contact</a>
+          </nav>
         </div>
-        <nav className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6 text-gray-600 mt-4 md:mt-0">
-          <a href="#features" onClick={() => scrollToContact('')} className="hover:text-teal-500 transition">Features</a>
-          <a href="#pricing" className="hover:text-teal-500 transition">Pricing</a>
-          <a href="#contact" className="hover:text-teal-500 transition">Contact</a>
-          <PlanButton label="Get Started" plan="single-agent" className="px-4 py-2 bg-teal-400 text-white" />
-        </nav>
+        {/* Primary CTA */}
+        <div className="container mx-auto px-4 pb-4 flex justify-end">
+          <PlanButton label="Get Started" plan="single-agent" className="px-5 py-2 bg-teal-500 text-white" />
+        </div>
       </header>
 
       {/* Hero Section */}
@@ -151,20 +158,20 @@ export default function HomePage() {
       <section id="contact" className="bg-gray-50 py-16">
         <div className="container mx-auto text-center px-4 md:px-0">
           <h2 className="text-3xl font-bold text-purple-500 mb-4">Ready to Get Started?</h2>
-          <form action="/api/leads" method="POST" className="max-w-md mx-auto grid grid-cols-1 gap-4">```jsx
+          <form action="/api/leads" method="POST" className="max-w-md mx-auto grid grid-cols-1 gap-4">
             <input name="plan" type="hidden" value={selectedPlan} />
             <input name="name" placeholder="Name" className="w-full p-3 border border-gray-300 rounded-lg" required />
             <input name="business" placeholder="Business Name" className="w-full p-3 border border-gray-300 rounded-lg" required />
             <input name="industry" placeholder="Industry (e.g., Tire Shop)" className="w-full p-3 border border-gray-300 rounded-lg" required />
-            <input type="email" name="email" placeholder="Email" className="w-full p-3 border border-gray-300 rounded-lg" required />
-            <input name="phone" placeholder="Phone" className="w-full p-3 border border-gray-300 rounded-lg" required />
+            <input type="email" name="email" placeholder="Email" className="w-full p-3 border;border-gray-300 rounded-lg" required />
+            <input name="phone" placeholder="Phone" className="w-full p-3 border;border-gray-300 rounded-lg" required />
             <button type="submit" className="py-3 bg-purple-500 text-white rounded hover:bg-purple-600 transition">Submit</button>
           </form>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-6 bg-white text-center text-gray-500">&copy; {new Date().getFullYear()} Personalized AI Solutions</footer>
+      <footer className="py-6 bg-white text-center text-gray-500">© {new Date().getFullYear()} Personalized AI Solutions</footer>
     </div>
   );
 }
