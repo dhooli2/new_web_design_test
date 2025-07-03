@@ -46,45 +46,42 @@ export default function HomePage() {
     <div className="font-sans text-gray-800 bg-white">
       {/* Navbar */}
       <header className="sticky top-0 bg-white bg-opacity-95 backdrop-blur-sm shadow-md z-50">
-        <div className="container mx-auto flex flex-col py-4 px-4">
-          {/* Row 1 */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <img src={PLACEHOLDER_LOGO} alt="Company Logo" className="h-16 md:h-20 w-auto" />
-              <div>
-                <span className="text-2xl font-bold text-blue-600">Personalized AI Solutions</span>
-                <p className="text-sm text-gray-500">for Small & Micro Businesses</p>
-              </div>
-            </div>
-            {/* Desktop CTA */}
-            <div className="hidden md:block">
-              <PlanButton label="Get Started" plan="single-agent" className="px-5 py-2 bg-teal-500 text-white" />
+        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between py-4 px-4">
+          {/* Logo & Title */}
+          <div className="flex items-center space-x-4">
+            <img src={PLACEHOLDER_LOGO} alt="Company Logo" className="h-12 w-auto" />
+            <div>
+              <span className="text-2xl font-bold text-blue-600">Personalized AI Solutions</span>
+              <p className="text-sm text-gray-500">for Small & Micro Businesses</p>
             </div>
           </div>
-          {/* Mobile Nav Row 2 */}
-          <nav className="mt-4 flex justify-around md:hidden">
+          {/* Desktop Nav Links */}
+          <nav className="hidden md:flex space-x-6 text-gray-600">
             <a href="#features" onClick={() => scrollToContact('')} className="hover:text-teal-500 transition">Features</a>
             <a href="#pricing" className="hover:text-teal-500 transition">Pricing</a>
-            <a href="#contact" className="hover:text-teal-500 transition">Contact</a>
-            <a href="/about" className="hover:text-teal-500 transition">About Us</a>
-          </nav>
-          {/* Mobile Nav Row 3 */}
-          <nav className="mt-2 flex justify-center md:hidden">
             <a href="/how-it-works" className="hover:text-teal-500 transition">How It Works</a>
+            <a href="/about" className="hover:text-teal-500 transition">About Us</a>
+            <a href="#contact" className="hover:text-teal-500 transition">Contact</a>
           </nav>
-          {/* Mobile CTA Row 4 */}
-          <div className="mt-4 flex justify-center md:hidden">
+          {/* Desktop CTA */}
+          <div className="hidden md:block">
             <PlanButton label="Get Started" plan="single-agent" className="px-5 py-2 bg-teal-500 text-white" />
           </div>
-          {/* Desktop Nav */}
-          <div className="mt-4 hidden md:flex md:items-center md:justify-center md:space-x-6">
-            <a href="#features" onClick={() => scrollToContact('')} className="hover:text-teal-500 transition">Features</a>
-            <a href="#pricing" className="hover:text-teal-500 transition">Pricing</a>
-            <a href="/how-it-works" className="hover:text-teal-500 transition">How It Works</a>
-            <a href="/about" className="hover:text-teal-500 transition">About Us</a>
-            <a href="#contact" className="hover:text-teal-500 transition">Contact</a>
-            <PlanButton label="Get Started" plan="single-agent" className="ml-4 px-5 py-2 bg-teal-500 text-white" />
-          </div>
+        </div>
+        {/* Mobile Row 2: Main Tabs */}
+        <nav className="mt-2 flex justify-around md:hidden px-4">
+          <a href="#features" onClick={() => scrollToContact('')} className="hover:text-teal-500 transition">Features</a>
+          <a href="#pricing" className="hover:text-teal-500 transition">Pricing</a>
+          <a href="#contact" className="hover:text-teal-500 transition">Contact</a>
+          <a href="/about" className="hover:text-teal-500 transition">About Us</a>
+        </nav>
+        {/* Mobile Row 3: Secondary Tab */}
+        <nav className="mt-2 flex justify-center md:hidden px-4">
+          <a href="/how-it-works" className="hover:text-teal-500 transition">How It Works</a>
+        </nav>
+        {/* Mobile Row 4: CTA */}
+        <div className="mt-4 flex justify-center md:hidden px-4 pb-4">
+          <PlanButton label="Get Started" plan="single-agent" className="px-5 py-2 bg-teal-500 text-white" />
         </div>
       </header>
 
